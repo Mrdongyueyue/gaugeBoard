@@ -81,10 +81,11 @@ fastlane/test_output
 ## Other
 
 ### Xcode Patch ###
-*.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
 # End of https://www.gitignore.io/api/xcode,swift
+
+gaugeBoard.xcodeproj/project.xcworkspace/contents.xcworkspacedata
