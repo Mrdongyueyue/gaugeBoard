@@ -12,6 +12,10 @@ class ViewController: UIViewController {
 
     let allCount = 150.0
     let duration = 5.0
+    let boardW = 375.0
+    let boardH = 667.0
+    
+    
     var labelArray : [UILabel] = []
     
     
@@ -22,8 +26,8 @@ class ViewController: UIViewController {
         let replicatorLayer1 = CAReplicatorLayer()
         
         let bezierPath1 = UIBezierPath()
-        bezierPath1.move(to: CGPoint(x: 4, y: 667/2.0))
-        bezierPath1.addLine(to: CGPoint(x: 16, y: 667/2.0))
+        bezierPath1.move(to: CGPoint(x: 4, y: boardH/2.0))
+        bezierPath1.addLine(to: CGPoint(x: 16, y: boardH/2.0))
         shapeLayer1.path = bezierPath1.cgPath
         shapeLayer1.lineWidth = 1
         shapeLayer1.strokeColor = UIColor.cyan.cgColor
@@ -31,7 +35,7 @@ class ViewController: UIViewController {
         
         replicatorLayer1.addSublayer(shapeLayer1)
         
-        replicatorLayer1.bounds = view.bounds
+        replicatorLayer1.bounds = CGRect(x: 0, y: 0, width: boardW, height: boardH)
         replicatorLayer1.position = view.center
         replicatorLayer1.preservesDepth = true
         
@@ -63,8 +67,8 @@ class ViewController: UIViewController {
         let shapeLayer2 = CAShapeLayer()
         
         let bezierPath2 = UIBezierPath()
-        bezierPath2.move(to: CGPoint(x: 0, y: 667/2.0))
-        bezierPath2.addLine(to: CGPoint(x: 20, y: 667/2.0))
+        bezierPath2.move(to: CGPoint(x: 0, y: boardH/2.0))
+        bezierPath2.addLine(to: CGPoint(x: 20, y: boardH/2.0))
         shapeLayer2.path = bezierPath2.cgPath
         shapeLayer2.lineWidth = 1
         shapeLayer2.strokeColor = UIColor.cyan.cgColor
@@ -74,7 +78,7 @@ class ViewController: UIViewController {
         
         replicatorLayer2.addSublayer(shapeLayer2)
         
-        replicatorLayer2.bounds = view.bounds
+        replicatorLayer2.bounds = CGRect(x: 0, y: 0, width: boardW, height: boardH)
         replicatorLayer2.position = view.center
         replicatorLayer2.preservesDepth = true
         
@@ -98,7 +102,7 @@ class ViewController: UIViewController {
         let arcLayer = CAShapeLayer()
         let arcPath = UIBezierPath()
         
-        arcPath.addArc(withCenter: view.center, radius: 375 / 2.0 - 10, startAngle: CGFloat(Double.pi), endAngle: 0, clockwise: true)
+        arcPath.addArc(withCenter: view.center, radius: CGFloat(boardW / 2.0 - 10), startAngle: CGFloat(Double.pi), endAngle: 0, clockwise: true)
         
         arcLayer.path = arcPath.cgPath
         arcLayer.lineWidth = 2
@@ -124,17 +128,17 @@ class ViewController: UIViewController {
 
     func addLabel() {
         let count = allCount/10
-        let radius = 375/2.0 - 30
+        let radius = boardW/2.0 - 30
         
         let utilAngle = Double.pi / count
         for i in 0..<Int(count + 1) {
             let y = 667/2.0 - sin(utilAngle * Double(i)) * radius
-            let x = 375/2.0 - cos(utilAngle * Double(i)) * radius
+            let x = boardW/2.0 - cos(utilAngle * Double(i)) * radius
             
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 12)
-            label.textColor = UIColor.init(colorLiteralRed: 0.4, green: 0.4, blue: 0.4, alpha: 1)
-            label.text = String.init(format: "%d", i * 10)
+            label.textColor = UIColor(colorLiteralRed: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+            label.text = String(format: "%d", i * 10)
             
             let text = label.text! as NSString
             let size = text.boundingRect(with: CGSize(width: 100, height: 100), options: [.usesLineFragmentOrigin], attributes: [NSFontAttributeName : label.font], context: nil).size
@@ -150,7 +154,7 @@ class ViewController: UIViewController {
     
     func animationShow( index : Int) {
         var index = index
-        UIView.animate(withDuration: 0, delay: duration/(allCount/10), options: [.curveLinear], animations: {
+        UIView.animate(withDuration: 0.01, delay: duration/(allCount/10) - 0.01, options: [.curveLinear], animations: {
             self.labelArray[index].alpha = 1
         }) { (complete) in
             index += 1
