@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     let allCount = 150.0
-    let duration = 3.0
+    let duration = 5.0
+    var labelArray : [UILabel] = []
     
     
     override func viewDidLoad() {
@@ -118,9 +119,48 @@ class ViewController: UIViewController {
         arcAnimation.toValue = 1
         arcLayer.add(arcAnimation, forKey: nil)
         
-        
+        addLabel()
     }
 
+    func addLabel() {
+        let count = allCount/10
+        let radius = 375/2.0 - 30
+        
+        let utilAngle = Double.pi / count
+        for i in 0..<Int(count + 1) {
+            let y = 667/2.0 - sin(utilAngle * Double(i)) * radius
+            let x = 375/2.0 - cos(utilAngle * Double(i)) * radius
+            
+            let label = UILabel()
+            label.font = UIFont.systemFont(ofSize: 12)
+            label.textColor = UIColor.init(colorLiteralRed: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+            label.text = String.init(format: "%d", i * 10)
+            
+            let text = label.text! as NSString
+            let size = text.boundingRect(with: CGSize(width: 100, height: 100), options: [.usesLineFragmentOrigin], attributes: [NSFontAttributeName : label.font], context: nil).size
+            label.bounds = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            label.center = CGPoint(x: x, y: y)
+            label.alpha = 0
+            view.addSubview(label)
+            labelArray.append(label)
+        }
+        labelArray[0].alpha = 1
+        animationShow(index: 1)
+    }
+    
+    func animationShow( index : Int) {
+        var index = index
+        UIView.animate(withDuration: 0, delay: duration/(allCount/10), options: [.curveLinear], animations: {
+            self.labelArray[index].alpha = 1
+        }) { (complete) in
+            index += 1
+            if index >= self.labelArray.count {
+                return
+            }
+            self.animationShow(index: index)
+        }
+        
+    }
     
 
 
