@@ -12,8 +12,8 @@ class ViewController: UIViewController {
 
     let allCount = 150.0
     let duration = 5.0
-    let boardW = 375.0
-    let boardH = 667.0
+    let boardW = Double(UIScreen.main.bounds.size.width)
+    let boardH = Double(UIScreen.main.bounds.size.height)
     
     
     var labelArray : [UILabel] = []
@@ -132,7 +132,7 @@ class ViewController: UIViewController {
         
         let utilAngle = Double.pi / count
         for i in 0..<Int(count + 1) {
-            let y = 667/2.0 - sin(utilAngle * Double(i)) * radius
+            let y = boardH/2.0 - sin(utilAngle * Double(i)) * radius
             let x = boardW/2.0 - cos(utilAngle * Double(i)) * radius
             
             let label = UILabel()
